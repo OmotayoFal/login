@@ -3,6 +3,7 @@ import './App.css';
 import Login from "./Components/Login/Login";
 import Analytics from "./Components/Analytics/Analytics"; 
 import Projects from "./Components/Projects/Projects"; 
+import ToDo from './Components/ToDo/ToDo';
 import Home from "./Components/Home/Home"; // Home contains the sidebar and sub-routes
 import Register from './Components/Login/Register';
 import ProfilePage from './Components/user/ProfilePage';  // Import the ProfilePage component
