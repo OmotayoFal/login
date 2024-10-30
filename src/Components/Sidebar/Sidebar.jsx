@@ -35,6 +35,11 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="sidebar-item">
+          <Link to="/profile" className="sidebar-link">
+            <FaHome className="sidebar-icon" /> <span>Profile</span>
+          </Link>
+        </li>
+        <li className="sidebar-item">
           <Link to="/todo" className="sidebar-link">
             <FaRegListAlt className="sidebar-icon" /> <span>To Do</span>
           </Link>
@@ -45,13 +50,13 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/tasks" className="sidebar-link">
+          <Link to="/projects" className="sidebar-link">
             <FaDiagramProject className="sidebar-icon" />{" "}
             <span>My Projects</span>
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/messages" className="sidebar-link">
+          <Link to="/analytics" className="sidebar-link">
             <FaChartLine className="sidebar-icon" /> <span>Analytics</span>
           </Link>
         </li>
