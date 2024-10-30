@@ -59,7 +59,7 @@ const Projects = () => {
               <div className="project-header" onClick={() => handleToggle(project.id)}>
                 <h2 className="project-title">{project.title}</h2>
                 <p className="project-description">{project.description}</p>
-                <button className="toggle-button">
+                <button className="toggle-button-pro">
                   {expandedProject === project.id ? 'Less Info ▲' : 'More Info ▼'}
                 </button>
               </div>
