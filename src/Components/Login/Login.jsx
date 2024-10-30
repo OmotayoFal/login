@@ -12,7 +12,7 @@ const Login = () => {
 
     // Check if email contains an "@" and matches hardcoded credentials
     if (email === "employee@gmail.com" && password === "you") {
-      navigate("/home");  // Navigate to the home page on successful login
+      navigate("/projects");  // Navigate to the home page on successful login
     } else if (!email.includes("@")) {
       setError("Invalid email format. Please include an '@' symbol.");
     } else {
