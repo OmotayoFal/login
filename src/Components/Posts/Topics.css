@@ -1,0 +1,254 @@
+/* Main Content */
+.main-content {
+  margin-left: 0px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center align items */
+}
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 100px; /* Space between header and cards */
+}
+
+/* Flex container for topics */
+.topics-container {
+  display: flex;
+  flex-direction: column; /* Stack header and cards */
+  align-items: center; /* Center align items */
+  justify-content: center; /* Center vertically */
+  width: 100%; /* Full width */
+  justify-content: center;
+  align-items: center;
+
+  
+  
+}
+
+.topics-grid {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for posts */
+  gap: 20px; /* Space between posts */
+  max-width: 900px; /* Control max width to fit 4 cards at once */
+  justify-content: flex-start; /* Align posts from left to right */
+  justify-content: center;
+  align-items: center;
+
+
+}
+
+.topic-card {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 200px;
+  height: 150px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Image inside the topic card */
+.topic-image {
+  width: 100%;
+  height: 80px; /* Set height to ensure it fits in the card */
+  object-fit: cover; /* Ensures the image doesn't stretch */
+  border-radius: 5px;
+  margin-bottom: 5px; /* Space between image and text */
+}
+
+/* Hover effect for topic cards */
+.topic-card:hover {
+  height: auto; /* Allow expansion on hover */
+  max-height: 300px;
+  cursor: pointer;
+}
+/* Hover effect for topic cards */
+.topic-card:hover {
+  height: auto; /* Allow expansion on hover */
+  max-height: 300px;
+  cursor: pointer;
+  
+}
+
+/* User Info in Top Right */
+.user-info {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  margin-left: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.actions button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background-color: #0056b3;
+}
+
+/* Comment Section */
+.comment-section {
+  margin-top: 10px;
+  display: none; /* Hidden by default */
+}
+
+.topic-card:hover .comment-section {
+  display: block; /* Show on hover */
+}
+
+.add-comment {
+  margin-top: 10px;
+}
+
+.add-comment input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Centered Add Topic Form */
+.add-topic-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-topic-form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-topic-form input,
+.add-topic-form textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-topic-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Floating button */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.floating-button:hover {
+  background-color: #0056b3;
+}
+
+/* Expanded Topic Modal */
+.expanded-topic-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it is above everything else */
+}
+
+.expanded-topic-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.expanded-topic-image {
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+/* Comments Section in Expanded Topic */
+.expanded-comments-section {
+  margin-top: 20px;
+}
+
+.add-comment input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.no-posts-message {
+  font-size: 1.5rem;
+  color: #666;
+  text-align: center;
+  margin-top: 20px;
+}
