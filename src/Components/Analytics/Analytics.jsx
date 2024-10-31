@@ -13,6 +13,8 @@ import {
 } from "chart.js"; // Import necessary elements for charts
 import "./Analytics.css"; // Ensure that you have the necessary CSS for sidebar styling
 import Sidebar from "../Sidebar/Sidebar.jsx";
+import ProjectGanttChart from "./ProjectGanttChart.jsx";
+import PieChart from './PieChart.jsx'; 
 // Register the required elements for both Bar and Pie charts
 ChartJS.register(
   ArcElement,
@@ -24,7 +26,7 @@ ChartJS.register(
   Title
 );
 
-const Home = () => {
+const Analytics = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // State to manage sidebar visibility
 
   // Toggle sidebar function
@@ -68,14 +70,14 @@ const Home = () => {
     setIsReportVisible((prevState) => !prevState);
   };
 
-  // Dummy data for users
-  const dummyUsers = [
-    { id: 1, name: "Alice", status: "Pending" },
-    { id: 2, name: "Bob", status: "Active" },
-    { id: 3, name: "Charlie", status: "Suspended" },
-    { id: 4, name: "David", status: "Active" },
-    { id: 5, name: "Eve", status: "Pending" },
-  ];
+      // Dummy data for users
+      const dummyUsers = [
+        { id: 1, name: "Alice", status: "Pending" },
+        { id: 2, name: "Bob", status: "Active" },
+        { id: 3, name: "Charlie", status: "Suspended" },
+        { id: 4, name: "David", status: "Active" },
+        { id: 5, name: "Eve", status: "Pending" },
+      ];
 
   // State to manage the expansion of the "Manage Users" section and user data
   const [isExpanded, setIsExpanded] = useState(false);
@@ -99,23 +101,51 @@ const Home = () => {
     const updatedUsers = users.filter((user) => user.id !== id);
     setUsers(updatedUsers);
   };
+  const projects = [
+    {
+      id: 1,
+      title: "Boots Delivery System",
+      description: "Overview of Boots Delivery System.",
+      startDate: "2024-10-10",
+      endDate: "2024-10-15",
+    },
+    {
+      id: 2,
+      title: "E-commerce Platform Revamp",
+      description: "Revamping the current e-commerce platform.",
+      startDate: "2024-10-14",
+      endDate: "2024-10-20",
+    },
+    {
+      id: 3,
+      title: "AI Chatbot Integration",
+      description: "Integrating AI Chatbot for customer support.",
+      startDate: "2024-10-16",
+      endDate: "2024-10-22",
+    },
+    {
+      id: 4,
+      title: "Noir App Development",
+      description: "Integrating AI Chatbot for customer support.",
+      startDate: "2024-10-18",
+      endDate: "2024-10-25",
+    },
+    {
+      id: 5,
+      title: "Inventory Management System",
+      description: "Integrating AI Chatbot for customer support.",
+      startDate: "2024-10-13",
+      endDate: "2024-11-22",
+    },
+    {
+      id: 6,
+      title: "Data Analytics Dashboard",
+      description: "Integrating AI Chatbot for customer support.",
+      startDate: "2024-10-16",
+      endDate: "2024-10-22",
+    },
+  ];
 
-  // Dummy data for task timeline chart
-  const taskTimelineData = {
-    labels: ["Code Review", "Marketing Plan", "Boots Delivery System", "AI Chatbot Integration", "Noir App"], // Project names
-    datasets: [
-      {
-        label: "Deadline (Days Left)",
-        data: [10, 15, 5, 7], // Deadlines for each project
-        backgroundColor: "rgba(255, 205, 86, 0.6)", // Yellow color
-      },
-      {
-        label: "Assumed Completion (Days)",
-        data: [8, 13, 6, 5], // Assumed completion for each project
-        backgroundColor: "rgba(75, 192, 192, 0.6)", // Blue color
-      },
-    ],
-  };
 
   const [tasks, setTasks] = useState([
     { taskName: "Team meeting preparation", employeeName: "David" },
@@ -181,169 +211,64 @@ const Home = () => {
       {/* Left Sidebar */}
       <Sidebar/>
 
-      {/* Blank Main Content for Customization */}
+      {/* Main Content */}
       <main className="main-content">
-  {/* Backlog Card */}
-  <div className="backlog-card">
-    <h2 className="backlog-title">Backlog</h2>
-    <ul className="task-list">
-      {b_tasks.map((task, index) => (
-        <li key={index} className="task-item">
-          {task}
-        </li>
-      ))}
-    </ul>
-  </div>
+        {/* Backlog Card */}
+        <div className="backlog-card">
+          <h2 className="backlog-title">Backlog</h2>
+          <ul className="task-list">
+            {b_tasks.map((task, index) => (
+              <li key={index} className="task-item">
+                {task}
+              </li>
+            ))}
+          </ul>
+          
+          </div>
 
-  
 
-  {/* Task Timeline Chart Card */}
-  <div className="task-timeline-card">
-    <h2 className="timeline-title">Task Timeline</h2>
-    <div className="chart-container">
-      <Bar
-        data={taskTimelineData}
-        options={{
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Days Left',
-              },
-            },
-          },
-        }}
-      />
-    </div>
-  </div>
+        {/* Gantt Chart Card with Workload Metrics at the Bottom */}
+        <div className="gantt-chart-card">
+          <h2 className="gantt-title">Project Gantt Chart</h2>
+          <ProjectGanttChart projects={projects} />
+          </div>
+          <div className="task-performance-report-card">
+            <button onClick={toggleReportVisibility} className="toggle-report-button">
+              {isReportVisible ? "-" : "+"} Workload Metrics
+            </button>
+            {isReportVisible && (
+              <div className="performance-report-content">
+                <h3>Task Completion Efficiency</h3>
+                <ul>
+                  {performanceData.map((member, index) => (
+                    <li key={index}>
+                      {member.employeeName}: {member.completedTasks}/{member.totalTasks} tasks completed
+                    </li>
+                  ))}
+                </ul>
+                {/* Display the lowest performer */}
+                <div className="training-suggestion">
+                  {(() => {
+                    const lowestPerformer = getLowestPerformer();
+                    return (
+                      <p>
+                        Employee <strong>{lowestPerformer.employeeName}</strong> needs training.
+                      </p>
+                    );
+                  })()}
+                </div>
+              </div>
+            )}
+          </div>
 
-  {/* Task Distribution Pie Chart Card */}
-  <div className="task-pie-chart-card">
-    <h2 className="timeline-title">Task Distribution</h2>
-    <div className="chart-container">
-      <Pie data={pieChartData} options={pieChartOptions} />
-    </div>
+          {/* User Task Manager with Pie Chart */}
+          <PieChart />
 
-    {/* Add Task Form */}
-    <div className="add-task-form">
-      <h3>Add New Task</h3>
-      <form onSubmit={addTask}>
-        <input
-          type="text"
-          placeholder="Task Name"
-          value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Employee Name"
-          value={employeeName}
-          onChange={(e) => setEmployeeName(e.target.value)}
-          required
-        />
-        <button type="submit" className="add-task-button">
-          Add Task
-        </button>
-      </form>
-    </div>
-  </div>
-  {/* Task Performance Report Card */}
-  <div className="task-performance-report-card">
-    <button onClick={toggleReportVisibility} className="toggle-report-button">
-      {isReportVisible ? "-" : "+"} Workload Metrics
-    </button>
-    {isReportVisible && (
-      <div className="performance-report-content">
-        <h3>Task Completion Efficiency</h3>
-        <ul>
-          {performanceData.map((member, index) => (
-            <li key={index}>
-              {member.employeeName}: {member.completedTasks}/{member.totalTasks} tasks completed
-            </li>
-          ))}
-        </ul>
-        {/* Display the lowest performer */}
-        <div className="training-suggestion">
-          {/* Get the employee with the lowest score */}
-          {(() => {
-            const lowestPerformer = getLowestPerformer();
-            return (
-              <p>
-                Employee <strong>{lowestPerformer.employeeName}</strong> needs training.
-              </p>
-            );
-          })()}
-        </div>
-      </div>
-    )}
-  </div>
-
-  <div className="manage-users-section">
-      <button className="expand-btn" onClick={toggleExpanded}>
-        {isExpanded ? "-" : "+"} Manage Users
-      </button>
-
-      {isExpanded && (
-        <div className="manage-users-content">
-          <h3>User Accounts</h3>
-          <table className="user-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td>{user.id}</td>
-                  <td>{user.name}</td>
-                  <td>{user.status}</td>
-                  <td>
-                    {user.status === "Pending" && (
-                      <button
-                        onClick={() => updateUserStatus(user.id, "Active")}
-                      >
-                        Approve
-                      </button>
-                    )}
-                    {user.status === "Active" && (
-                      <button
-                        onClick={() => updateUserStatus(user.id, "Suspended")}
-                      >
-                        Suspend
-                      </button>
-                    )}
-                    {user.status === "Suspended" && (
-                      <button
-                        onClick={() => updateUserStatus(user.id, "Active")}
-                      >
-                        Reactivate
-                      </button>
-                    )}
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteUser(user.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-</main>
-
+        
+        
+      </main>
     </div>
   );
 };
 
-export default Home;
+export default Analytics;
