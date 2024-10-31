@@ -5,7 +5,39 @@ import './Topics.css';
 import Sidebar from "../Sidebar/Sidebar.jsx";
 
 const Topics = () => {
-  const [topics, setTopics] = useState([]); 
+  const [topics, setTopics] = useState([
+    {
+      title: "Understanding React Hooks",
+      content: "React hooks are a way to use state and lifecycle features in functional components.",
+      category: "Technical",
+      id: 1,
+    },
+    {
+      title: "JavaScript ES6 Features",
+      content: "Learn about the new features introduced in ES6.",
+      category: "Technical",
+      id: 2,
+    },
+    {
+      title: "The Future of Web Development",
+      content: "Exploring trends and technologies shaping the future of web development.",
+      category: "Non-Technical",
+      id: 3,
+    },
+    {
+      title: "Building Responsive Layouts",
+      content: "Techniques to build layouts that work on various screen sizes.",
+      category: "Technical",
+      id: 4,
+    },
+    {
+      title: "Effective Time Management",
+      content: "Strategies for managing your time effectively.",
+      category: "Non-Technical",
+      id: 5,
+    },
+  ]);
+
   const [newTopicTitle, setNewTopicTitle] = useState('');
   const [newTopicContent, setNewTopicContent] = useState('');
   const [newTopicImage, setNewTopicImage] = useState(null);
@@ -13,7 +45,7 @@ const Topics = () => {
   const [isAddTopicOpen, setIsAddTopicOpen] = useState(false);
   const [expandedTopic, setExpandedTopic] = useState(null);
   const [comments, setComments] = useState({});
-  const [likes, setLikes] = useState({});
+  const [likes, setLikes] = useState({}); 
   const [filter, setFilter] = useState(''); 
 
   const toggleAddTopic = () => {
@@ -52,14 +84,14 @@ const Topics = () => {
   };
 
   const handleLike = (topicId) => {
-    setLikes((prevLikes) => ({ ...prevLikes, [topicId]: prevLikes[topicId] + 1 }));
+    setLikes((prevLikes) => ({ ...prevLikes, [topicId]: (prevLikes[topicId] || 0) + 1 }));
   };
 
   const handleAddComment = (topicId, commentText) => {
     if (commentText) {
       setComments((prevComments) => ({
         ...prevComments,
-        [topicId]: [...prevComments[topicId], commentText]
+        [topicId]: [...(prevComments[topicId] || []), commentText]
       }));
     }
   };
@@ -97,8 +129,6 @@ const Topics = () => {
           <button onClick={() => handleFilterChange('')}>All</button>
           <button onClick={() => handleFilterChange('Non-Technical')}>Non-Technical</button>
           <button onClick={() => handleFilterChange('Technical')}>Technical</button>
-          
-          
         </div>
 
         <div className="topics-container">
@@ -109,8 +139,6 @@ const Topics = () => {
               {filteredTopics.map((topic) => (
                 <div key={topic.id} className="topic-card" onClick={() => handleExpandTopic(topic)}>
                   <h2>{topic.title}</h2>
-
-                  {/* Category label */}
                   <span className={`category-label ${topic.category.toLowerCase()}`}>
                     {topic.category}
                   </span>
@@ -170,7 +198,6 @@ const Topics = () => {
             </div>
           </div>
         )}
-        
 
         {isAddTopicOpen && (
           <div className="add-topic-modal">
