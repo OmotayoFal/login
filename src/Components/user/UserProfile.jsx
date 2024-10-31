@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import userProfileImg from './userprofileimg.png';
 
 const UserProfile = () => {
-  const [email, setEmail] = useState('user@example.com');
+
+  const [email, setEmail] = useState('JohnDoe@gmail.com');
   const [preferredName, setPreferredName] = useState('John Doe');
   const [position, setPosition] = useState('Manager');
   const [isEditing, setIsEditing] = useState(false);
