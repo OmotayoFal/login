@@ -45,7 +45,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/topics" className="sidebar-link">
+          <Link to="/posts" className="sidebar-link">
             <FaComments className="sidebar-icon" /> <span>Posts</span>
           </Link>
         </li>
@@ -57,7 +57,7 @@ const Sidebar = () => {
         </li>
         <li className="sidebar-item">
           <Link to="/analytics" className="sidebar-link">
-            <FaChartLine className="sidebar-icon" /> <span>Analytics</span>
+            <FaChartLine className="sidebar-icon" /> <span>Manager's Dashboard</span>
           </Link>
         </li>
       </ul>
