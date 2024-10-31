@@ -1,68 +1,73 @@
-import React, { useState } from "react";
-import {
-  FaHome,
-  FaTasks,
-  FaComments,
-  FaChartLine,
-  FaRegListAlt,
-  FaProjectDiagram,
-  FaRProject,
-} from "react-icons/fa";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
-import "./Sidebar.css";
-import { FaDiagramProject } from "react-icons/fa6";
+/* General styling for sidebar */
+.sidebar {
+  width: 250px; /* Sidebar width */
+  background-color: #333; /* Dark background */
+  padding: 20px; /* Internal padding */
+  transition: width 0.3s ease; /* Smooth transition when collapsing */
+}
+.header-container {
+  display: flex; /* Aligns child elements in a row */
+  align-items: center; /* Vertically center elements */
+  gap: 10%;
+  padding: 10px; /* Add some padding if needed */
+}
+.sidebar-logo {
+  font-size: 24px; /* Logo font size */
+  color: white; /* White text */
+  text-align: center;
+  margin-bottom: 20px; /* Space below logo */
+}
 
-const Sidebar = () => {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+.sidebar-nav {
+  list-style: none; /* Remove list bullets */
+  padding: 0; /* Remove padding */
+}
 
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed((prevState) => !prevState);
-  };
+.sidebar-item {
+  margin-bottom: 20px; /* Space between each sidebar item */
+}
 
-  return (
-    <aside className={`sidebar ${isSidebarCollapsed ? "collapsed" : ""}`}>
-      <div className="header-container">
-        <button className="toggle-button" onClick={toggleSidebar}>
-          {isSidebarCollapsed ? "☰" : "×"} {/* Toggle icon */}
-        </button>
-        <div className="sidebar-logo">My App</div>
-      </div>
+.sidebar-link {
+  display: flex; /* Flexbox for layout */
+  align-items: center; /* Align items vertically */
+  padding: 15px; /* Padding inside the link */
+  background-color: #444; /* Dark gray background */
+  border-radius: 8px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  color: white; /* White text */
+  font-size: 18px; /* Font size */
+  transition: background-color 0.3s ease; /* Smooth background transition */
+}
 
-      <ul className="sidebar-nav">
-        <li className="sidebar-item">
-          <Link to="/home" className="sidebar-link">
-            <FaHome className="sidebar-icon" /> <span>Home</span>
-          </Link>
-        </li>
-        <li className="sidebar-item">
-          <Link to="/profile" className="sidebar-link">
-            <FaHome className="sidebar-icon" /> <span>Profile</span>
-          </Link>
-        </li>
-        <li className="sidebar-item">
-          <Link to="/todo" className="sidebar-link">
-            <FaRegListAlt className="sidebar-icon" /> <span>To Do</span>
-          </Link>
-        </li>
-        <li className="sidebar-item">
-          <Link to="/posts" className="sidebar-link">
-            <FaComments className="sidebar-icon" /> <span>Posts</span>
-          </Link>
-        </li>
-        <li className="sidebar-item">
-          <Link to="/projects" className="sidebar-link">
-            <FaDiagramProject className="sidebar-icon" />{" "}
-            <span>My Projects</span>
-          </Link>
-        </li>
-        <li className="sidebar-item">
-          <Link to="/analytics" className="sidebar-link">
-            <FaChartLine className="sidebar-icon" /> <span>Manager's Dashboard</span>
-          </Link>
-        </li>
-      </ul>
-    </aside>
-  );
-};
+.sidebar-link:hover {
+  background-color: #555; /* Change background on hover */
+}
 
-export default Sidebar; // Ensure you are using 'export default' here
+.sidebar-icon {
+  margin-right: 10px; /* Space between icon and text */
+}
+
+.sidebar.collapsed {
+  width: 59px; /* Narrower width when collapsed */
+}
+.sidebar.collapsed.sidebar-icon {
+  margin-right: 0px;
+}
+.sidebar.collapsed .sidebar-link {
+  justify-content: center; /* Center icons when collapsed */
+}
+.sidebar.collapsed .sidebar-logo {
+  display: none;
+}
+.sidebar.collapsed .sidebar-link span {
+  display: none; /* Hide text when collapsed */
+}
+
+.toggle-button {
+  background: transparent; /* No background */
+  border: none; /* No border */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 24px; /* Font size for the toggle icon */
+  margin-bottom: 10px; /* Space below toggle button */
+  display: block; /* Block element for easier clicking */
+}
