@@ -1,6 +1,5 @@
 /* Main Content */
 .main-content {
-  margin-left: 0px;
   padding: 20px;
   display: flex;
   flex-direction: column; /* Stack elements vertically */
@@ -10,34 +9,31 @@
 h1 {
   font-size: 2rem;
   color: #333;
-  margin-bottom: 100px; /* Space between header and cards */
+  width: 100%;
 }
 
 /* Flex container for topics */
+/* Parent container adjustments */
 .topics-container {
   display: flex;
-  flex-direction: column; /* Stack header and cards */
-  align-items: center; /* Center align items */
-  justify-content: center; /* Center vertically */
-  width: 100%; /* Full width */
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-
-  
+  width: 100%;
+  max-width: 1200px; /* Center on the page and prevent it from expanding too much */
+  margin: 0 auto;
   
 }
 
+/* Grid layout */
 .topics-grid {
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping for posts */
-  gap: 20px; /* Space between posts */
-  max-width: 900px; /* Control max width to fit 4 cards at once */
-  justify-content: flex-start; /* Align posts from left to right */
-  justify-content: center;
-  align-items: center;
-
-
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  justify-items: center;
+  max-width: 1200px;
 }
+
 
 .topic-card {
   background-color: #f9f9f9;
@@ -251,4 +247,67 @@ button {
   color: #666;
   text-align: center;
   margin-top: 20px;
+}
+
+/* Filter Buttons */
+.filter-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-buttons button:hover {
+  background-color: #0056b3;
+}
+
+/* Category label */
+.category-label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.category-label.technical {
+  background-color: #28a745;
+}
+
+.category-label.non-technical {
+  background-color: #dc3545;
+}
+
+/* Category selection buttons in Add Topic Form */
+.category-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.category-buttons button {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: grey;
+  cursor: pointer;
+}
+
+.category-buttons button.selected {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
 }
