@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault();
 
     // Check if email contains an "@" and matches hardcoded credentials
-    if (email === "employee@gmail.com" && password === "you") {
+    if (email === "JohnDoe@gmail.com" && password === "you") {
       navigate("/projects");  // Navigate to the home page on successful login
     } else if (!email.includes("@")) {
       setError("Invalid email format. Please include an '@' symbol.");
