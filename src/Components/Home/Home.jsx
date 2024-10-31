@@ -1,140 +1,255 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { FaThumbsUp, FaComments, FaPlus } from 'react-icons/fa';
 import Avatar from "react-avatar";
-import GaugeChart from "react-gauge-chart"; // Import GaugeChart component
-import { Doughnut, Bar } from "react-chartjs-2";
-import Calendar from "react-calendar"; // Import the calendar component
-import "react-calendar/dist/Calendar.css"; // Calendar styles
-import "./Home.css"; // Custom CSS
-import Sidebar from "../Sidebar/Sidebar.jsx"; // Import Sidebar component
+import './Topics.css';
+import Sidebar from "../Sidebar/Sidebar.jsx";
 
-const Home = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [date, setDate] = useState(new Date()); // State for calendar date
-  const [taskList, setTasks] = useState([
-    { id: 1, task: "Complete project documentation", completed: false },
-    { id: 2, task: "Prepare for presentation", completed: false },
-    { id: 3, task: "Fix bugs in the delivery app", completed: false },
-  ]); // Dummy data for to-do list
+const Topics = () => {
+  const [topics, setTopics] = useState([
+    {
+      title: "Understanding React Hooks",
+      content: "React hooks are a way to use state and lifecycle features in functional components.",
+      category: "Technical",
+      image: "https://miro.medium.com/v2/resize:fit:900/0*iTuEmxLD1IOJ5Xf1.png", // Example image URL
+      id: 1,
+    },
+    {
+      title: "JavaScript ES6 Features",
+      content: "Learn about the new features introduced in ES6.",
+      category: "Technical",
+      image: "https://media.licdn.com/dms/image/v2/D4D12AQHeu6x2jIurgw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1702274710606?e=1735776000&v=beta&t=uic0nenAC1uAybIjvCjU8s_N4xNfFX8r6kFwM3pStvk", // Example image URL
+      id: 2,
+    },
+    {
+      title: "The Future of Web Development",
+      content: "Exploring trends and technologies shaping the future of web development.",
+      category: "Non-Technical",
+      image: "https://media.licdn.com/dms/image/D4E12AQF2nlfXoZK2Yw/article-cover_image-shrink_600_2000/0/1675704281846?e=2147483647&v=beta&t=Rs9ejfu9oorJGUiudx8OkCEx0JKdFPsa_WIx0qmtS4Y", // Example image URL
+      id: 3,
+    },
+    {
+      title: "Building Responsive Layouts",
+      content: "Techniques to build layouts that work on various screen sizes.",
+      category: "Technical",
+      image: "https://miro.medium.com/v2/resize:fit:1200/1*DUJB-gvWl-HFYb0AXEgJeg.png", // Example image URL
+      id: 4,
+    },
+    {
+      title: "Effective Time Management",
+      content: "Strategies for managing your time effectively.",
+      category: "Non-Technical",
+      image: "https://media.licdn.com/dms/image/C5612AQHvsiX7SH50Kg/article-cover_image-shrink_600_2000/0/1520128073704?e=2147483647&v=beta&t=zbrzkwQ55a9SErqIgpr-6em7EjrkovtgHI-P65N-3Jg", // Example image URL
+      id: 5,
+    },
+  ]);
 
-  const tasks = [
-    { id: 1, name: "Game COO", progress: 30 }, // 30% done
-    { id: 2, name: "Delivery App", progress: 88 }, // 88% done
-  ];
+  const [newTopicTitle, setNewTopicTitle] = useState('');
+  const [newTopicContent, setNewTopicContent] = useState('');
+  const [newTopicImage, setNewTopicImage] = useState(null);
+  const [newTopicCategory, setNewTopicCategory] = useState(''); 
+  const [isAddTopicOpen, setIsAddTopicOpen] = useState(false);
+  const [expandedTopic, setExpandedTopic] = useState(null);
+  const [comments, setComments] = useState({});
+  const [likes, setLikes] = useState({}); 
+  const [filter, setFilter] = useState(''); 
 
-  // Handle checkbox toggle for tasks
-  const toggleTaskCompletion = (taskId) => {
-    setTasks(
-      taskList.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
-    );
+  const toggleAddTopic = () => {
+    setIsAddTopicOpen(!isAddTopicOpen);
   };
 
-  const collaborators = [
-    { name: "Alice", email: "alice@example.com" },
-    { name: "Bob", email: "bob@example.com" },
-    { name: "Charlie", email: "charlie@example.com" },
-    { name: "Dana", email: "dana@example.com" },
-  ];
+  const handleAddTopic = () => {
+    if (newTopicTitle && newTopicContent && newTopicCategory) { 
+      const newTopic = {
+        title: newTopicTitle,
+        content: newTopicContent,
+        image: newTopicImage,
+        category: newTopicCategory, 
+        id: Date.now()
+      };
+      setTopics([...topics, newTopic]);
+      setNewTopicTitle('');
+      setNewTopicContent('');
+      setNewTopicImage(null);
+      setNewTopicCategory(''); 
+      setIsAddTopicOpen(false);
+      setLikes({ ...likes, [newTopic.id]: 0 });
+      setComments({ ...comments, [newTopic.id]: [] });
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewTopicImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleLike = (topicId) => {
+    setLikes((prevLikes) => ({ ...prevLikes, [topicId]: (prevLikes[topicId] || 0) + 1 }));
+  };
+
+  const handleAddComment = (topicId, commentText) => {
+    if (commentText) {
+      setComments((prevComments) => ({
+        ...prevComments,
+        [topicId]: [...(prevComments[topicId] || []), commentText]
+      }));
+    }
+  };
+
+  const handleExpandTopic = (topic) => {
+    setExpandedTopic(topic);
+  };
+
+  const handleCloseExpandedTopic = () => {
+    setExpandedTopic(null);
+  };
+
+  const handleFilterChange = (filterType) => {
+    setFilter(filterType);
+  };
+
+  const filteredTopics = topics.filter(topic => {
+    if (!filter) return true;
+    return topic.category === filter;
+  });
 
   return (
     <div className="home-container">
-      {/* Sidebar */}
       <Sidebar />
-
-      {/* Main Content */}
       <main className="main-content">
-        {/* Top Bar with Avatar */}
-        <div className="top-bar">
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="search-bar"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="user-info">
-            <Avatar name="Alice" round={true} size="40" />
-            <span className="user-name">Alice / BackEnd Developer </span>
-          </div>
+        <div className="user-info">
+          <Avatar name="Alice" round={true} size="40" />
+          <span className="user-name">Alice / Backend Developer</span>
         </div>
 
-        {/* Content Below Navbar */}
-        <div className="content">
-          <div className="grid-container">
-            <div className="tasks-section white-section">
-              <h3>Today's Tasks</h3>
-              <div className="tasks-list">
-                {tasks.map((task) => (
-                  <div className="task-item" key={task.id}>
-                    <h4>{task.name}</h4>
-                    <p>
-                      For this indie game, we will be giving it an adventurous
-                      vibe to make the player feel at ease.
-                    </p>
-                    <p>
-                      Collaborators:
-                      {collaborators.map((collab, index) => (
-                        <Avatar
-                          key={index}
-                          name={collab.name}
-                          email={collab.email}
-                          round={true}
-                          size="20"
-                          style={{ margin: "0 2px" }}
-                        />
-                      ))}
-                    </p>
-                    <GaugeChart
-                      id={`gauge-chart-${task.id}`}
-                      nrOfLevels={30}
-                      percent={task.progress / 100}
-                      colors={["#FF6347", "#FFCE56", "#28a745"]}
-                      arcWidth={0.3}
-                      style={{
-                        width: "200px",
-                        height: "100px",
-                        margin: "10px 0",
-                      }}
-                    />
+        <h1>Blog Topics</h1>
+
+        {/* Filter Buttons */}
+        <div className="filter-buttons">
+          <button onClick={() => handleFilterChange('')}>All</button>
+          <button onClick={() => handleFilterChange('Non-Technical')}>Non-Technical</button>
+          <button onClick={() => handleFilterChange('Technical')}>Technical</button>
+        </div>
+
+        <div className="topics-container">
+          {filteredTopics.length === 0 ? (
+            <div className="no-posts-message">No Posts Yet</div>
+          ) : (
+            <div className="topics-grid">
+              {filteredTopics.map((topic) => (
+                <div key={topic.id} className="topic-card" onClick={() => handleExpandTopic(topic)}>
+                  <h2>{topic.title}</h2>
+                  <span className={`category-label ${topic.category.toLowerCase()}`}>
+                    {topic.category}
+                  </span>
+
+                  <div className="actions">
+                    <button onClick={(e) => { e.stopPropagation(); handleLike(topic.id); }}>
+                      <FaThumbsUp /> {likes[topic.id] || 0} Likes
+                    </button>
+                    <button onClick={(e) => { e.stopPropagation(); handleExpandTopic(topic); }}>
+                      <FaComments /> {comments[topic.id]?.length || 0} Comments
+                    </button>
                   </div>
-                ))}
+
+                  <p>{topic.content}</p>
+                  {topic.image && (
+                    <img src={topic.image} alt="Topic" className="topic-image" />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {expandedTopic && (
+          <div className="expanded-topic-modal" onClick={handleCloseExpandedTopic}>
+            <div className="expanded-topic-content" onClick={(e) => e.stopPropagation()}>
+              <h2>{expandedTopic.title}</h2>
+              <span className={`category-label ${expandedTopic.category.toLowerCase()}`}>
+                {expandedTopic.category}
+              </span>
+              <p>{expandedTopic.content}</p>
+              {expandedTopic.image && <img src={expandedTopic.image} alt="Expanded Topic" className="expanded-topic-image" />}
+
+              <div className="expanded-comments-section">
+                <h4>Comments</h4>
+                {comments[expandedTopic.id]?.length > 0 ? (
+                  comments[expandedTopic.id].map((comment, idx) => (
+                    <p key={idx}><strong>Comment {idx + 1}:</strong> {comment}</p>
+                  ))
+                ) : (
+                  <p>No comments yet.</p>
+                )}
+                <div className="add-comment">
+                  <input
+                    type="text"
+                    placeholder="Add a comment..."
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleAddComment(expandedTopic.id, e.target.value);
+                        e.target.value = '';
+                      }
+                    }}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="calendar white-section">
-              <h4>Calendar</h4>
-              <Calendar value={date} onChange={setDate} />
-            </div>
-            <div className="todo-list white-section">
-              <h4>To-do List</h4>
-              <ul>
-                {taskList.map((task) => (
-                  <li key={task.id}>
-                    <input
-                      type="checkbox"
-                      checked={task.completed}
-                      onChange={() => toggleTaskCompletion(task.id)}
-                    />
-                    <span
-                      style={{
-                        textDecoration: task.completed
-                          ? "line-through"
-                          : "none",
-                      }}
-                    >
-                      {task.task}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <button onClick={handleCloseExpandedTopic}>Close</button>
             </div>
           </div>
-        </div>
+        )}
+
+        {isAddTopicOpen && (
+          <div className="add-topic-modal">
+            <div className="add-topic-form">
+              <input
+                type="text"
+                placeholder="Topic Title"
+                value={newTopicTitle}
+                onChange={(e) => setNewTopicTitle(e.target.value)}
+              />
+              <textarea
+                placeholder="Write something about the topic..."
+                value={newTopicContent}
+                onChange={(e) => setNewTopicContent(e.target.value)}
+              ></textarea>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+
+              {/* Category selection buttons */}
+              <div className="category-buttons">
+                <button
+                  className={newTopicCategory === 'Technical' ? 'selected' : ''}
+                  onClick={() => setNewTopicCategory('Technical')}
+                >
+                  Technical
+                </button>
+                <button
+                  className={newTopicCategory === 'Non-Technical' ? 'selected' : ''}
+                  onClick={() => setNewTopicCategory('Non-Technical')}
+                >
+                  Non-Technical
+                </button>
+              </div>
+              <button onClick={handleAddTopic}>Add Topic</button>
+            </div>
+          </div>
+        )}
+
+        <button className="floating-button" onClick={toggleAddTopic}>
+          <FaPlus />
+        </button>
       </main>
     </div>
   );
 };
 
-export default Home;
+export default Topics;
