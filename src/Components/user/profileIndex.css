@@ -1,13 +1,8 @@
-.profile-page-container {
+/* Container for the main layout */
+.main {
   display: flex;
-  flex-direction: row;
-  max-width: 1200px; /* Set max width */
-  margin: 0 auto;
-  padding: 20px;
-  min-height: 100vh; /* Fill vertical space */
-}
-.main{
-  display: flex;
+ 
+  min-height: 100vh; /* Full height for the main layout */
 }
 
 .sidebar {
@@ -15,24 +10,49 @@
   margin-right: 20px; /* Space between sidebar and content */
 }
 
+/* Main content container beside the sidebar */
+.profile-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  max-width: 1200px; /* Max width for main content */
+  width: 100%; /* Full width */
+  padding: 20px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
 .profile-content {
   flex: 1; /* Take up remaining space */
   max-width: calc(100% - 270px); /* Adjust for sidebar width */
 }
 
 .grid-container {
-  /*display: grid;
-  /*grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));*/
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between grid items */
+  object-fit: cover;
 }
 
-.user-profile, .password-management, .admin-controls {
+.user-profile, .password-management, .manage-users-section {
   border: 1px solid #ccc;
   padding: 20px; 
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   border-radius: 8px;
   background-color: #f9f9f9;
 }
+
+/* Override for Password Management box */
+.password-management {
+  flex: 2; /* Makes it take up twice the space of the other boxes */
+  min-width: 600px; /* Sets a minimum width for larger sizing */
+  min-height: 90px;
+}
+
+.manage-users-section {
+  flex: 2; /* Makes it take up twice the space of the other boxes */
+  min-width: 250px; /* Sets a minimum width for larger sizing */
+}
+
 
 .user-profile-image img {
   width: 100%;
